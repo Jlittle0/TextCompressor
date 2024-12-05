@@ -31,6 +31,14 @@ public class TextCompressor {
 
     private static void compress() {
 
+
+        // Yes this space is empty. Most of my work was done in TestingArea and alternate
+        // class because it's easier to run the actual programs and see what's happening versus
+        // in the terminal on the given test cases.
+
+
+
+
         // Current idea: For all alphabetical letters, store them in 5-6 bits for a quick compression
         // and then add an escape character whenever you're switching between lowercase
         // characters and anything else. 32 is a space which could be 00000.
@@ -61,14 +69,6 @@ public class TextCompressor {
 
         String s = BinaryStdIn.readString();
         int n = s.length();
-
-       // First test case = ABRACADABRABRABRA
-        // Most Common Sequence: ABRA = 00
-        // New Text = 00CAD00BR00
-
-
-        // Test segment
-
 
 
         // Size is currently 10 but it's most likely going to be a percentage of the words in
