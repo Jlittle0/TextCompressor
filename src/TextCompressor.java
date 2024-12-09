@@ -29,52 +29,47 @@
  */
 public class TextCompressor {
 
+
+    private static int bitLength;
+    private static final int EOF = 0x100;
+    private static int additonalCodes = 0;
+
     private static void compress() {
 
-
-        // Yes this space is empty. Most of my work was done in TestingArea and alternate
-        // class because it's easier to run the actual programs and see what's happening versus
-        // in the terminal on the given test cases.
-
-
-
-
-        // Current idea: For all alphabetical letters, store them in 5-6 bits for a quick compression
-        // and then add an escape character whenever you're switching between lowercase
-        // characters and anything else. 32 is a space which could be 00000.
-
-        // Possibly do a binary tree that can be compressed into a string of characters/bits
-        // to then put in the header and use to find things.
-
-        // For frequently appearing words, set a code for them and then send a hashmap that
-        // holds the word as the key and then the value of its ranking based on frequency
-        // making the word that appears most have a value of 1.
-
-        // Potentially take a chunk of the test to find out what words are the most common
-        // and assume that the chunk you took is representative of the whole. Could also take
-        // a couple chunks from throughout the text to make it more accurate instead of the
-        // whole thing. Most likely just going to consider words for the most appearances but
-        // maybe phrases are just as likely.
-
-        // Maybe first find out the average length of each word, if the length is greater than 2
-        // then have 10 bit codes and if each word is only 2 letters long on average then
-        // have 8 bit or smaller codes to represent different words.
-
-        // Keep spaces in the final txt file to separate words so that you know what's what
-        // and then you can have different # of bits for different hashed words. The would be
-        // 26 * 26 * t + 26 * h + e etc. using a hash function. Which would be over 50000
-        // but less than 2 to the 16th and could be represented in 2 bytes instead of 3. For
-        // words that are only two letters, then you could store them in 1 byte. This hash map
-        // doesn't seem to be that good sadly :(
-
+        // Read in the file & determine it's length
         String s = BinaryStdIn.readString();
         int n = s.length();
 
+        // Depending on the length of the file, determine length and # of codes used.
+        bitLength = n < 10000 ? 9 : 12;
+        BinaryStdOut.write(16 - bitLength, 4);
 
-        // Size is currently 10 but it's most likely going to be a percentage of the words in
-        // the text in the future.
-        Object[] map = new Object[10];
-        map = s.split(" ");
+        // Create the TST that will be used to lookup codes and keep track of new ones
+        TST codeDictionary = new TST();
+
+        // Construct TST with first 256 ascii values
+        for (int i = 0; i < 256; i++) {
+            codeDictionary.insert(String.valueOf(i), i);
+        }
+
+        // Insert EOF character
+        codeDictionary.insert("EOF", 0x100);
+
+        // Iterate through the given string and use LZW to compress it.
+        String currentString;
+        int currentCode;
+        for (int i = 0; i < n; i++) {
+            // Find the current longest code
+            currentString = codeDictionary.getLongestPrefix(s, i);
+            currentCode = codeDictionary.lookup(currentString);
+
+            // Write out the current longest code
+            BinaryStdOut.write(currentCode, bitLength);
+
+            // Add the next code to dictionary
+            codeDictionary.insert(currentString + s.charAt(i + currentString.length()), EOF + ++additonalCodes);
+            i += currentString.length() -1;
+        }
 
         BinaryStdOut.close();
     }
@@ -82,6 +77,9 @@ public class TextCompressor {
     private static void expand() {
 
         // TODO: Complete the expand() method
+
+        // If the next code is one greater than the current number of codes, that means it's the
+        // edge case and that the next code is the current string/prefix + its first letter.
 
         BinaryStdOut.close();
     }

@@ -1,105 +1,54 @@
 public class TestingArea {
 
+    private static int bitLength;
+    private static final int EOF = 0x80;
+    private static int additonalCodes = 0;
+
     private static boolean lowercase = true;
 
     public static void main(String[] args) {
-        int chunkSize = 5;
-
-        String test = "ABRAcadabra";
-        String convertedTest = "";
-
-        Character c = 'a';
-        System.out.println((int)c);
-
-        // Uppercase = 65 to 90
-        // Lowercase = 97 to 122
-
-        boolean previouslyLower = true;
-
-        // Assume lowercase and swap when the value 27 is seen.
-        // Required bits to represent a letter: 5 || Total numbers: 32
-        String currentChar = "";
-
-        // Compressor
-        for (int i = 0; i < test.length(); i++) {
-            previouslyLower = lowercase;
-            currentChar = convertChar(test.charAt(i));
-            if (lowercase != previouslyLower)
-                convertedTest += "11011";
-            convertedTest += currentChar;
-        }
-
-        System.out.println(convertedTest + "   |   " + convertedTest.length() + " bits!");
-
-        // Expander
-        String currentChunk;
-        int currentLetter = 0;
-        boolean testBoolean = true;
-        String newString = "";
-        for (int i = 0; i < convertedTest.length() / chunkSize;  i++) {
-            currentChunk = "";
-            for (int j = 0; j < chunkSize; j++) {
-                currentChunk += convertedTest.charAt(chunkSize * i + j);
-            }
-            System.out.println(currentChunk);
-            currentLetter = Integer.parseInt(currentChunk, 2);
-            System.out.println(currentLetter);
-            if (currentLetter == 27)
-                testBoolean = !testBoolean;
-            else
-                newString += convertBinary(currentLetter, testBoolean);
-        }
-
-        System.out.println(newString);
+        compress();
     }
 
-    public static char convertBinary(int i, boolean b) {
-        if (!b)
-            return (char)(i + 65);
-        return (char)(i + 97);
-    }
+    private static void compress() {
 
-    public static int binToChar(char c) {
-        if (c >= 65 && c <= 90) {
-            setCase(false);
-            return c - 65;
-        }
-        // If lowercase
-        else if (c >= 97 && c <= 122) {
-            setCase(true);
-            return c - 97;
-        }
-        else
-            return 0;
-    }
+        // Read in the file & determine it's length
+        String s = "ABRACADABRA";
+        int n = s.length();
 
-    public static int convertInt(char c) {
-        if (c >= 65 && c <= 90) {
-            setCase(false);
-            return c - 65;
-        }
-        // If lowercase
-        else if (c >= 97 && c <= 122) {
-            setCase(true);
-            return c - 97;
-        }
-        else
-            return 0;
-    }
+        // Depending on the length of the file, determine length and # of codes used.
+        bitLength = n < 10000 ? 8 : 12;
+        BinaryStdOut.write(16 - bitLength, 4);
 
-    public static String convertChar(char c) {
-        String value = "";
-        String finalReturn = "";
-        // If uppercase
-        value += Integer.toBinaryString(convertInt(c));
-        if (value.length() < 5) {
-            for (int i = 0; i < 5- value.length(); i++)
-                finalReturn += "0";
-        }
-        return finalReturn + value;
-    }
+        // Create the TST that will be used to lookup codes and keep track of new ones
+        TST codeDictionary = new TST();
 
-    public static void setCase(boolean bool) {
-            lowercase = bool;
+        // Construct TST with first 128 ascii values
+        for (int i = 0; i < 128; i++) {
+            codeDictionary.insert(String.valueOf((char)i), i);
+        }
+
+        // Insert EOF character
+        codeDictionary.insert("EOF", 0x80);
+
+        // Iterate through the given string and use LZW to compress it.
+        String currentString;
+        int currentCode = 0;
+        for (int i = 0; i < n; i++) {
+            System.out.println(s + " | " + i);
+            // Find the current longest code
+            currentString = codeDictionary.getLongestPrefix(s, i);
+            currentCode = codeDictionary.lookup(currentString);
+
+            // Write out the current longest code
+            System.out.println(currentString);
+            System.out.println(currentString + " | " + Integer.toString(currentCode, 16) + " | " + currentString + s.charAt(i + currentString.length()));
+
+            // Add the next code to dictionary
+            codeDictionary.insert(currentString + s.charAt(i + currentString.length()), EOF + ++additonalCodes);
+            i += currentString.length() -1;
+        }
+
+        BinaryStdOut.close();
     }
 }
