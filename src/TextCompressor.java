@@ -32,7 +32,7 @@ public class TextCompressor {
 
     private static int bitLength;
     private static final int EOF = 0x100;
-    private static int totalCodes = EOF;
+    private static int totalCodes = 0;
     private static int maxCodes;
 
     private static void compress() {
@@ -44,7 +44,7 @@ public class TextCompressor {
         // Depending on the length of the file, determine length and # of codes used.
         bitLength = n < 20000 ? 9 : 12;
         BinaryStdOut.write(16 - bitLength, 4);
-        maxCodes = (int)Math.pow(2, bitLength);
+        maxCodes = (int)Math.pow(2, bitLength) - EOF - 1;
 
         // Create the TST that will be used to lookup codes and keep track of new ones
         TST codeDictionary = new TST();
@@ -66,11 +66,13 @@ public class TextCompressor {
             currentCode = codeDictionary.lookup(currentString);
 
             // Write out the current longest code
-            BinaryStdOut.write(currentCode, 9);
+            BinaryStdOut.write(currentCode, bitLength);
 
             // Add the next code to dictionary
             if (i + currentString.length() < s.length() && totalCodes < maxCodes) {
                 codeDictionary.insert(currentString + s.charAt(i + currentString.length()), EOF + ++totalCodes);
+            }
+            if (i + currentString.length() < s.length()) {
                 i += currentString.length() - 1;
             } else
                 break;
