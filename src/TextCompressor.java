@@ -32,7 +32,8 @@ public class TextCompressor {
 
     private static int bitLength;
     private static final int EOF = 0x100;
-    private static int additonalCodes = 0;
+    private static int totalCodes = EOF;
+    private static int maxCodes;
 
     private static void compress() {
 
@@ -41,35 +42,40 @@ public class TextCompressor {
         int n = s.length();
 
         // Depending on the length of the file, determine length and # of codes used.
-        bitLength = n < 10000 ? 9 : 12;
+        bitLength = n < 20000 ? 9 : 12;
         BinaryStdOut.write(16 - bitLength, 4);
+        maxCodes = (int)Math.pow(2, bitLength);
 
         // Create the TST that will be used to lookup codes and keep track of new ones
         TST codeDictionary = new TST();
 
         // Construct TST with first 256 ascii values
-        for (int i = 0; i < 256; i++) {
-            codeDictionary.insert(String.valueOf(i), i);
+        for (int i = 0; i < EOF; i++) {
+            codeDictionary.insert(String.valueOf((char)i), i);
         }
 
         // Insert EOF character
-        codeDictionary.insert("EOF", 0x100);
+        codeDictionary.insert("EOF", EOF);
 
         // Iterate through the given string and use LZW to compress it.
         String currentString;
-        int currentCode;
+        int currentCode = 0;
         for (int i = 0; i < n; i++) {
             // Find the current longest code
             currentString = codeDictionary.getLongestPrefix(s, i);
             currentCode = codeDictionary.lookup(currentString);
 
             // Write out the current longest code
-            BinaryStdOut.write(currentCode, bitLength);
+            BinaryStdOut.write(currentCode, 9);
 
             // Add the next code to dictionary
-            codeDictionary.insert(currentString + s.charAt(i + currentString.length()), EOF + ++additonalCodes);
-            i += currentString.length() -1;
+            if (i + currentString.length() < s.length() && totalCodes < maxCodes) {
+                codeDictionary.insert(currentString + s.charAt(i + currentString.length()), EOF + ++totalCodes);
+                i += currentString.length() - 1;
+            } else
+                break;
         }
+        BinaryStdOut.write(EOF, bitLength);
 
         BinaryStdOut.close();
     }
