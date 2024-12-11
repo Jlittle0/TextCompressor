@@ -11,7 +11,6 @@ public class TestingArea {
 
     public static void main(String[] args) {
         String s = compress();
-        expand(s);
     }
 
     private static String compress() {
@@ -65,49 +64,4 @@ public class TestingArea {
         return finalCode;
     }
 
-    private static void expand(String s) {
-
-        ArrayList<String> codes = new ArrayList<>(s.split(" "));
-
-        // Find the desired bitlength for the given text
-        bitLength = 16 - BinaryStdIn.readInt(4);
-        maxCodes = 1 << bitLength;
-
-        // Create and fill a map with base ascii characters
-        String[] codeDictionary = new String[maxCodes];
-        for (int i = 0; i < EOF; i++) {
-            codeDictionary[i] = String.valueOf((char)i);
-            totalCodes++;
-        }
-        codeDictionary[EOF] = "EOF";
-        totalCodes++;
-
-        int nextCode = BinaryStdIn.readInt(bitLength), currentCode = 0;
-        String currentString;
-        // Read in each code until the end
-        while (currentCode != EOF) {
-            // Grab each code
-            currentCode = nextCode;
-            nextCode = BinaryStdIn.readInt(bitLength);
-
-            // Convert the first code into a string and check if second is new
-            currentString = codeDictionary[currentCode];
-            // If the nextCode is a new one, add it to the dictionary using current code
-            if (nextCode > totalCodes)
-                codeDictionary[++totalCodes] = currentString + currentString.charAt(0);
-            else
-                codeDictionary[++totalCodes] = currentString + codeDictionary[nextCode].charAt(0);
-            BinaryStdOut.write(currentString);
-        }
-
-
-
-
-        // TODO: Complete the expand() method
-
-        // If the next code is one greater than the current number of codes, that means it's the
-        // edge case and that the next code is the current string/prefix + its first letter.
-
-        BinaryStdOut.close();
-    }
 }

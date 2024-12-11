@@ -30,6 +30,8 @@
 public class TextCompressor {
 
 
+    // Bunch of variables used in compress and expand to determine whether or not I should
+    // keep adding codes to the map or TST and to set the value of EOF code.
     private static int bitLength;
     private static final int EOF = 0x100;
     private static int totalCodes = 0;
@@ -68,10 +70,11 @@ public class TextCompressor {
             // Write out the current longest code
             BinaryStdOut.write(currentCode, bitLength);
 
-            // Add the next code to dictionary
+            // Add the next code to dictionary if all conditions are met
             if (i + currentString.length() < s.length() && totalCodes < maxCodes) {
                 codeDictionary.insert(currentString + s.charAt(i + currentString.length()), EOF + ++totalCodes);
             }
+            // Increment i as long as we aren't at the end of the string and break otherwise
             if (i + currentString.length() < s.length()) {
                 i += currentString.length() - 1;
             } else
@@ -101,27 +104,20 @@ public class TextCompressor {
         String currentString;
         // Read in each code until the end
         while (nextCode != EOF) {
-            // Grab each code
+            // Grab each code and read in the next one
             currentCode = nextCode;
             nextCode = BinaryStdIn.readInt(bitLength);
 
             // Convert the first code into a string and check if second is new
             currentString = codeDictionary[currentCode];
             // If the nextCode is a new one, add it to the dictionary using current code
+            // otherwise, as long as we still have space for codes, add new code.
             if (nextCode >= totalCodes && totalCodes < maxCodes)
                 codeDictionary[totalCodes++] = currentString + currentString.charAt(0);
             else if (totalCodes < maxCodes)
                 codeDictionary[totalCodes++] = currentString + codeDictionary[nextCode].charAt(0);
             BinaryStdOut.write(currentString);
         }
-
-
-
-
-        // TODO: Complete the expand() method
-
-        // If the next code is one greater than the current number of codes, that means it's the
-        // edge case and that the next code is the current string/prefix + its first letter.
 
         BinaryStdOut.close();
     }
