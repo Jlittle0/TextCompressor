@@ -84,6 +84,40 @@ public class TextCompressor {
 
     private static void expand() {
 
+        // Find the desired bitlength for the given text
+        bitLength = 16 - BinaryStdIn.readInt(4);
+        maxCodes = (1 << bitLength);
+
+        // Create and fill a map with base ascii characters
+        String[] codeDictionary = new String[maxCodes];
+        for (int i = 0; i < EOF; i++) {
+            codeDictionary[i] = String.valueOf((char)i);
+            totalCodes++;
+        }
+        codeDictionary[EOF] = "EOF";
+        totalCodes++;
+
+        int nextCode = BinaryStdIn.readInt(bitLength), currentCode = 0;
+        String currentString;
+        // Read in each code until the end
+        while (nextCode != EOF) {
+            // Grab each code
+            currentCode = nextCode;
+            nextCode = BinaryStdIn.readInt(bitLength);
+
+            // Convert the first code into a string and check if second is new
+            currentString = codeDictionary[currentCode];
+            // If the nextCode is a new one, add it to the dictionary using current code
+            if (nextCode >= totalCodes && totalCodes < maxCodes)
+                codeDictionary[totalCodes++] = currentString + currentString.charAt(0);
+            else if (totalCodes < maxCodes)
+                codeDictionary[totalCodes++] = currentString + codeDictionary[nextCode].charAt(0);
+            BinaryStdOut.write(currentString);
+        }
+
+
+
+
         // TODO: Complete the expand() method
 
         // If the next code is one greater than the current number of codes, that means it's the

@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c0fc687-5e81-4f2e-86c0-a00732202ab3" name="Changes" comment="Some work during stats and lunch. Roughly 30 minutes">
-      <change afterPath="$PROJECT_DIR$/src/tricky.bin" afterDir="false" />
+    <list default="true" id="4c0fc687-5e81-4f2e-86c0-a00732202ab3" name="Changes" comment="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct.">
+      <change afterPath="$PROJECT_DIR$/src/expandedabra.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/expandedalice.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/expandedshakespeare.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/expandedtricky.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shakespeare.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestingArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestingArea.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TextCompressor.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextCompressor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TextCompressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextCompressor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/alice.bin" beforeDir="false" afterPath="$PROJECT_DIR$/src/alice.bin" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +107,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733861976306</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct.">
+      <option name="closed" value="true" />
+      <created>1733862449004</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733862449004</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -111,6 +123,7 @@
     <MESSAGE value="First Attempt." />
     <MESSAGE value="Commit for first work period. Final Attempt." />
     <MESSAGE value="Some work during stats and lunch. Roughly 30 minutes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some work during stats and lunch. Roughly 30 minutes" />
+    <MESSAGE value="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct." />
+    <option name="LAST_COMMIT_MESSAGE" value="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct." />
   </component>
 </project>
