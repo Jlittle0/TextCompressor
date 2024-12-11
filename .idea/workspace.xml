@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c0fc687-5e81-4f2e-86c0-a00732202ab3" name="Changes" comment="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct.">
-      <change afterPath="$PROJECT_DIR$/src/expandedabra.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/expandedalice.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/expandedshakespeare.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/expandedtricky.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shakespeare.bin" afterDir="false" />
+    <list default="true" id="4c0fc687-5e81-4f2e-86c0-a00732202ab3" name="Changes" comment="Comments added, now just need to make sure that the work log is up to speed as well. Will do it outside of class and then submit later today :)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestingArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestingArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TextCompressor.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextCompressor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TextCompressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextCompressor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +107,23 @@
       <option name="project" value="LOCAL" />
       <updated>1733862449004</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Everything works perfectly. Now just need to update worklog and add comments.">
+      <option name="closed" value="true" />
+      <created>1733939104195</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733939104195</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Comments added, now just need to make sure that the work log is up to speed as well. Will do it outside of class and then submit later today :)">
+      <option name="closed" value="true" />
+      <created>1733939433694</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733939433694</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -124,6 +132,8 @@
     <MESSAGE value="Commit for first work period. Final Attempt." />
     <MESSAGE value="Some work during stats and lunch. Roughly 30 minutes" />
     <MESSAGE value="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct." />
-    <option name="LAST_COMMIT_MESSAGE" value="Perhaps completed compress() method. Not sure. Perchance. But the numbers seem to be relatively correct." />
+    <MESSAGE value="Everything works perfectly. Now just need to update worklog and add comments." />
+    <MESSAGE value="Comments added, now just need to make sure that the work log is up to speed as well. Will do it outside of class and then submit later today :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comments added, now just need to make sure that the work log is up to speed as well. Will do it outside of class and then submit later today :)" />
   </component>
 </project>
